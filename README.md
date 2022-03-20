@@ -102,3 +102,17 @@ def make_shell_context():
     return {'db': db, 'User': User, 'Post': Post}
 
 ```
+
+## Flask Login
+
+It is a famous flask extension that provides login related functionalities like managing login state and remember me feature. `pip install flask-login`.
+
+Initialize the extension by instantiating the LoginManager right after the application's.
+
+```
+from flask_login import LoginManager
+...
+app = Flask(__name__)
+...
+login = LoginManager(app)
+```
