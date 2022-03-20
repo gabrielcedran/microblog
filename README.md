@@ -20,3 +20,10 @@ By default the latest version is installed. To force an older one use the comman
 Flask need to know what the entry point is. In order to define that, export the environment variable `FLASK_APP={file name}` (example `FLASK_APP=microblog.py`). Then simply run the command `flask run`. 
 
 Alternatively `FLASK_APP=app/test.py flask run`.
+
+### Removing the need to provide FLASK_APP environment variable every time
+
+Providing FLASK_APP env variable every time a new terminal session is open can be quite tedious. Since Flask 1.0 it is possible to automate this process using the package `python-dotenv`.
+
+1. `pip install python-dotenv`
+2. create a file `.flaskenv` in the root directory and add the following entry `FLASK_APP=microblog.py` (or entry file name).
