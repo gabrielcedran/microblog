@@ -84,3 +84,21 @@ Flask-migrate extension exposes its commands via the flask command under the sub
 There are two ways of creating db migration scripts: manually and automatically. When creating migration scripts automatically Alembic will perform a diff between the current db schema defined by the `database models` and the `actual database`. To run the automatic creation run the command `flask db migrate` (provide the parameter `-m "users table"` to add a brief description to the created migration file name).
  
 The `migrate` command does not make any changes to the DB, only creates the migration scripts. To apply the changes run `flask db upgrade` (and `flask db downgrade` to revert the latest change).  
+
+
+## Flask Shell
+
+Using python interpreter to test parts of the application out is very handy. However importing all the dependencies every time a new session is created can be quite tedious. Flask has a core command named `shell` that is meant to create the interpreter with everything that is necessary for the application.
+
+By default flask shell will only import flask application, however it is possible to configure the context that should be pre-imported:
+
+```
+#microblog.py
+from app import app, db
+from app.models import User, Post
+
+@app.shell_context_processor
+def make_shell_context():
+    return {'db': db, 'User': User, 'Post': Post}
+
+```
