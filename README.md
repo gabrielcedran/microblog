@@ -27,3 +27,23 @@ Providing FLASK_APP env variable every time a new terminal session is open can b
 
 1. `pip install python-dotenv`
 2. create a file `.flaskenv` in the root directory and add the following entry `FLASK_APP=microblog.py` (or entry file name).
+
+### Working with Web Forms
+
+Flask-WTF extension is a thin wrapper around the WTForms package that integrates nicely with Flask. `pip install flask-wtf`.
+
+Configuration options:
+
+1. providing keys in app.config. Example: `app.config['SECRET_KEY']='my-strong-secret-key'`
+2. isolate the configs in a separated (and isolated) in a class module:
+```
+# config.py
+import os
+
+class Config(object):
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'my-default-strong-secret-key'
+
+```
+
+The secret key is used by flask and extensions as a cryptographic key to generate signatures and tokens. Flask-WTF uses it to protect the website against Cross Site Request Forgery (CSRF). The keys are supposed to be secret and only know by trusted maintainers and as few people as possible.
+
