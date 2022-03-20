@@ -15,3 +15,8 @@ Once the VE is activates you are good to start installing packages `pip install 
 By default the latest version is installed. To force an older one use the command `pip install "flask<2". It will pick up the latest version before version 2.
 
 
+## Running a flask application
+
+Flask need to know what the entry point is. In order to define that, export the environment variable `FLASK_APP={file name}` (example `FLASK_APP=microblog.py`). Then simply run the command `flask run`. 
+
+Alternatively `FLASK_APP=app/test.py flask run`.
