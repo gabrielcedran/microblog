@@ -47,3 +47,40 @@ class Config(object):
 
 The secret key is used by flask and extensions as a cryptographic key to generate signatures and tokens. Flask-WTF uses it to protect the website against Cross Site Request Forgery (CSRF). The keys are supposed to be secret and only know by trusted maintainers and as few people as possible.
 
+## Databases
+
+Databases is one of the many areas that Flask is intentionally not opinionated. Through extensions it supports relational and non-relational databases and it is down to you to choose the one that suits your needs the best.
+
+
+### ORMS
+
+Flask-SQLAlchemy is an extension that provides ORMs (object relational mapper) functionalities and supports an array of databases out of the box, including popular choices like Postgres, MySQL, SQLite, etc.
+ORMs translate high-level object mappings into database commands.
+
+To install this extension run `pip install flask-sqlalchemy`.
+
+#### Configuring SQLite
+
+SQLite is a lightweight DB that stores each DB in a single file on the disk and there is no need to run a formal DB server like MySQL and Postgres. It is a convenient choice for development and small applications.
+
+To begin the configuration add two extra entries in the configuration class.
+
+```
+basedir = os.path.abspath(os.path.dirname(__file__))
+...
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+```
+
+
+### DB Migrations
+
+Data migration is a critical part of relational databases are they are centered around structured data. Once the structure change, the data which is already in the DB has to be migrated.
+
+Database migrations can be done using the extension Flask-Migrate that is a wrapper for Alembic - `pip install flask-migrate`. 
+
+Flask-migrate extension exposes its commands via the flask command under the subcommand db. To initiate the migration repository run the subcommand `flask db init`.
+
+There are two ways of creating db migration scripts: manually and automatically. When creating migration scripts automatically Alembic will perform a diff between the current db schema defined by the `database models` and the `actual database`. To run the automatic creation run the command `flask db migrate` (provide the parameter `-m "users table"` to add a brief description to the created migration file name).
+ 
+The `migrate` command does not make any changes to the DB, only creates the migration scripts. To apply the changes run `flask db upgrade` (and `flask db downgrade` to revert the latest change).  
